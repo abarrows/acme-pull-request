@@ -1,66 +1,36 @@
-// This function returns stuff
-  public user() { 
-    const p = this.httpContext.getPathParameters();
+// The User class is responsible for retrieving user data from Amazon
+class AmazonUser {
+  constructor(httpContext) {
+    this.httpContext = httpContext;
+		this.id = initializedUserId();
+  };
 
-    let user = Number(p.userId) || '';  // keep userId as String
+	initializedUserId() {
+    const parameters = this.httpContext.getPathParameters();
+    let userId = String(parameters.userId); // keep userId as String
+	};
+	// handleServiceResponse ensures the request is in a try/catch
+	getUser = async (req, res) => {
+    userId = req.params.id;
+    const serviceResponse = await userService.findById(id);
+		// Use logger so we don't leak logs in production and have better control
+		// over log levels (better performance).
+		logger(`The user with id ${id} was found and here is the response: ${serviceResponse}`);
+    return handleServiceResponse(serviceResponse, res);
+  };
 
-    // used later
-    var temp;
-
-
-    // this returns a promise
-    callHttpEndpoint('http://amazon.com/user/' + user).then((result) => 
-        {
-
-      temp = result; 
-
-      let name = temp.name;
-      let is = temp.id;
-      let lastLoginData = temp.lastLoginDate;
-      let accountType = temp.accountType;  // could be admin, freeUser, or paidUser
-
-      console.log('Result retrieved from endpoint' + n + ID + LlD + z);
-      this.httpContext.ok(result, 200, DEFAULT_HEADERS);
-    }
-      );
-
-        console.log('Result from Http call' + temp); 
-  }
+	 // this returns a promise TODO: Part of this could be abstracted into a
+	 // helper to more gracefully handle errors and the endpoint domain.
+  callHttpEndpoint = (`https://amazon.com/user/${user}`).then((result) => {
+  	const response = result;
+    let name = response.name;
+    let is = response.id;
+    let lastLoginData = response.lastLoginDate;
+    let accountType = response.accountType;  // could be admin, freeUser, or paidUser
+   
+    this.httpContext.ok(result, 200, DEFAULT_HEADERS);
+    });
+	};
 }
 
-
-—
-
-
-
-
-
-
-
-
-
-
-
-
-function fetchWeather(cityName) {
-
-	var apiKey = '23as3dsf-asdf3-a26a-dfasf3';
-	var apiURL = 'https://api.weather.com/data/2.5/weather?q=' + cityName + '&appid=' + apiKey; 
-
-	let data;
-
-	fetch(apiURL)
-    	.then( res => {
-        	data = res.body
-    	}); 
-
-	var c = data.city; 
-	var t = data.temperature;
-	var d = data.weatherPrediction; 
-
-	if (t == '10') {
-    	t = Number(t);
-	}
-    
-	return { c, t, d };
-}
+export const userService = new UserService();
