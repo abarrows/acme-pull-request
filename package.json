@@ -1,23 +1,23 @@
 {
-  "name": "express-typescript-boilerplate",
-  "version": "1.0.14",
-  "description": "An Express boilerplate backend",
   "author": "Edwin Hernandez",
-  "repository": "edwinhern/express-typescript-2024",
+  "description": "An Express boilerplate backend",
   "license": "MIT",
-  "main": "index.ts",
+  "name": "express-typescript-boilerplate",
   "private": true,
+  "repository": "edwinhern/express-typescript-2024",
   "scripts": {
-    "dev": "tsx watch --clear-screen=false src/index.ts | pino-pretty",
     "build": "tsup",
-    "start": "node dist/index.js",
     "clean": "rimraf dist coverage",
+    "dev": "tsx watch --clear-screen=false src/index.ts | pino-pretty",
+    "format": "biome format src/",
     "lint": "biome check src/",
     "lint:fix": "biome check src/ --fix",
-    "format": "biome format src/",
-    "test": "vitest run",
-    "prepare": "husky"
+    "prepare": "husky",
+    "setup": "cp .env.example .env && npm install && npm run dev",
+    "start": "node dist/index.js",
+    "test": "vitest run"
   },
+  "version": "1.0.14",
   "dependencies": {
     "@asteasolutions/zod-to-openapi": "^7.0.0",
     "cors": "^2.8.5",
@@ -53,14 +53,15 @@
       "biome check --apply --no-errors-on-unmatched"
     ]
   },
+  "main": "index.ts",
   "tsup": {
+    "clean": true,
     "entry": [
-      "src",
+      "!src/**/*.test.*",
       "!src/**/__tests__/**",
-      "!src/**/*.test.*"
+      "src"
     ],
-    "splitting": false,
     "sourcemap": true,
-    "clean": true
+    "splitting": false
   }
 }
