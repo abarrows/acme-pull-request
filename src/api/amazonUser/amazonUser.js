@@ -45,4 +45,4 @@ class amazonUser {
   }
 }
 
-export const amazonUser = new UserService();
+export default amazonUser;
