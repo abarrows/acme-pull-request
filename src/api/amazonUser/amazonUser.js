@@ -2,6 +2,7 @@ import logger from '@/common/utils/logger';
 import { env } from '@/common/utils/envConfig';
 
 // The User class is responsible for retrieving user data from Amazon
+// TODO: Convert this to typescript especially if sending to external APIs.
 class amazonUser {
   constructor(httpContext) {
     this.httpContext = httpContext;
@@ -23,7 +24,7 @@ class amazonUser {
   }
 
   // this returns a promise TODO: Part of this could be abstracted into a helper to more gracefully handle errors and the endpoint domain.
-  async callHttpEndpoint(user) {
+  async fetchUserDataFromAmazon(user) {
     try {
       const { SERVICE_AMAZON_URL } = env;
       const response = await fetch(`${SERVICE_AMAZON_URL}/${user}`);
