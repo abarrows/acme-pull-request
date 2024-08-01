@@ -6,8 +6,8 @@
 [![Docker Image CI](https://github.com/edwinhern/express-typescript-2024/actions/workflows/docker-image.yml/badge.svg)](https://github.com/edwinhern/express-typescript-2024/actions/workflows/docker-image.yml)
 
 ``` code
-Hey There! 🙌 
-🤾 that ⭐️ button if you like this boilerplate. 
+Hey There! 🙌
+🤾 that ⭐️ button if you like this boilerplate.
 ```
 
 ## 🌟 Introduction
